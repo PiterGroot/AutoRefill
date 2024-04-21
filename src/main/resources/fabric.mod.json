@@ -4,9 +4,9 @@
   "version": "${version}",
 
   "name": "Example Mod",
-  "description": "This mod aims to help new BTA modders.",
+  "description": "Cool test mod.",
   "authors": [
-    "Turnip Labs"
+    "Piter Groot"
   ],
   "contact": {
     "homepage": "",
@@ -19,16 +19,16 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-			"turniplabs.examplemod.ExampleMod"
+			"pitaah.examplemod.ExampleMod"
     ],
 		"beforeGameStart": [
-			"turniplabs.examplemod.ExampleMod"
+			"pitaah.examplemod.ExampleMod"
 		],
 		"afterGameStart": [
-			"turniplabs.examplemod.ExampleMod"
+			"pitaah.examplemod.ExampleMod"
 		],
 		"recipesReady": [
-			"turniplabs.examplemod.ExampleMod"
+			"pitaah.examplemod.ExampleMod"
 		]
 	},
   "mixins": [
