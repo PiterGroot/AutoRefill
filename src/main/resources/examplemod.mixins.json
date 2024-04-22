@@ -4,7 +4,13 @@
     "package": "pitaah.examplemod.mixin",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
-      "InventoryMixin"
+      "BlockAxisAlignedMixin",
+      "BlockMixin",
+      "BlockButtonMixin",
+      "BlockChestMixin",
+      "BlockSlabMixin",
+      "BlockSlabPaintedMixin",
+      "BlockStairsMixin"
     ],
     "client": [
     ],
