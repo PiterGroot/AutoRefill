@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "examplemod",
+  "id": "auto_refill",
   "version": "${version}",
 
   "name": "Example Mod",
@@ -19,20 +19,11 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-			"pitaah.examplemod.ExampleMod"
-    ],
-		"beforeGameStart": [
-			"pitaah.examplemod.ExampleMod"
-		],
-		"afterGameStart": [
-			"pitaah.examplemod.ExampleMod"
-		],
-		"recipesReady": [
-			"pitaah.examplemod.ExampleMod"
-		]
+			"pitaah.auto_refill.AutoRefill"
+    ]
 	},
   "mixins": [
-      "examplemod.mixins.json"
+      "AutoRefill.mixins.json"
   ],
 
   "depends": {

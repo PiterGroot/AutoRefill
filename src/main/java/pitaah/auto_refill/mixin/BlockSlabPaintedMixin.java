@@ -1,5 +1,5 @@
-package pitaah.examplemod.mixin;
-import pitaah.examplemod.ExampleMod;
+package pitaah.auto_refill.mixin;
+import pitaah.auto_refill.AutoRefill;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,8 +15,9 @@ import net.minecraft.core.world.World;
 public abstract class BlockSlabPaintedMixin
 {
 	@Inject(method = "onBlockPlaced", at = @At("HEAD"))
-	public void OnBlockAxisAlignedPlaced(World world, int x, int y, int z, Side side, EntityLiving entity, double sideHeight, CallbackInfo ci)
+	public void OnBlockSlabPaintedPlaced(World world, int x, int y, int z, Side side, EntityLiving entity, double sideHeight, CallbackInfo ci)
 	{
-		ExampleMod.OnBlockPlaced(entity, true);
+		AutoRefill.print("yhas");
+		AutoRefill.OnBlockPlaced(entity, world, true);
 	}
 }

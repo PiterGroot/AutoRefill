@@ -1,5 +1,5 @@
-package pitaah.examplemod.mixin;
-import pitaah.examplemod.ExampleMod;
+package pitaah.auto_refill.mixin;
+import pitaah.auto_refill.AutoRefill;
 
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -7,16 +7,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.Mixin;
 
 import net.minecraft.core.entity.EntityLiving;
+import net.minecraft.core.block.BlockLever;
 import net.minecraft.core.util.helper.Side;
-import net.minecraft.core.block.BlockStairs;
 import net.minecraft.core.world.World;
 
-@Mixin(value = BlockStairs.class, remap = false)
-public abstract class BlockStairsMixin
+@Mixin(value = BlockLever.class, remap = false)
+public abstract class BlockLeverMixin
 {
 	@Inject(method = "onBlockPlaced", at = @At("HEAD"))
-	public void OnBlockAxisAlignedPlaced(World world, int x, int y, int z, Side side, EntityLiving entity, double sideHeight, CallbackInfo ci)
+	public void OnBlockLeverPlaced(World world, int x, int y, int z, Side side, EntityLiving entity, double sideHeight, CallbackInfo ci)
 	{
-		ExampleMod.OnBlockPlaced(entity, false);
+		AutoRefill.OnBlockPlaced(entity, world, false);
 	}
 }
+

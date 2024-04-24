@@ -1,0 +1,30 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "pitaah.auto_refill.mixin",
+    "compatibilityLevel": "JAVA_8",
+    "mixins": [
+      "BlockAxisAlignedMixin",
+      "BlockMixin",
+      "BlockButtonMixin",
+      "BlockChestMixin",
+      "BlockSlabMixin",
+      "BlockSlabPaintedMixin",
+      "BlockStairsMixin",
+      "BlockFenceGateMixin",
+      "BlockLanternFireflyMixin",
+      "BlockLeverMixin",
+      "BlockPistonBaseMixin",
+      "BlockRedstoneRepeaterMixin",
+      "BlockRotatableMixin",
+      "BlockRotatableHorizontalMixin",
+      "BlockTileEntityRotatableMixin",
+      "BlockTorchMixin",
+      "BlockTrapDoorMixin"
+    ],
+    "client": [
+    ],
+    "injectors": {
+        "defaultRequire": 1
+  }
+}
