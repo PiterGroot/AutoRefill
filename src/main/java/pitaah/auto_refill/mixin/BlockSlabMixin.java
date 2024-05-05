@@ -17,6 +17,6 @@ public abstract class BlockSlabMixin
 	@Inject(method = "onBlockPlaced", at = @At("HEAD"))
 	public void OnBlockSlabPlaced(World world, int x, int y, int z, Side side, EntityLiving entity, double sideHeight, CallbackInfo ci)
 	{
-		AutoRefill.OnBlockPlaced(entity, world, true);
+		AutoRefill.CheckRefill(entity, world, true);
 	}
 }

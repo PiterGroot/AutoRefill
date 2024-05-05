@@ -20,7 +20,8 @@
       "BlockRotatableHorizontalMixin",
       "BlockTileEntityRotatableMixin",
       "BlockTorchMixin",
-      "BlockTrapDoorMixin"
+      "BlockTrapDoorMixin",
+      "PlayerControllerMixin"
     ],
     "client": [
     ],

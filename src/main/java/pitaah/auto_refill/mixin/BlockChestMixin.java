@@ -17,6 +17,6 @@ public abstract class BlockChestMixin
 	@Inject(method = "onBlockPlaced", at = @At("HEAD"))
 	public void OnBlockChestPlaced(World world, int x, int y, int z, Side side, EntityLiving entity, double sideHeight, CallbackInfo ci)
 	{
-		AutoRefill.OnBlockPlaced(entity, world, false);
+		AutoRefill.CheckRefill(entity, world, false);
 	}
 }

@@ -5,8 +5,8 @@ import net.minecraft.core.entity.Entity;
 import net.minecraft.core.entity.EntityLiving;
 import net.minecraft.core.entity.player.EntityPlayer;
 import net.minecraft.core.item.ItemStack;
-import net.minecraft.core.sound.SoundCategory;
 import net.minecraft.core.world.World;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,11 +14,19 @@ public class AutoRefill implements ModInitializer {
     public static final String MOD_ID = "auto_refill";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	public static void print(String message){
-		LOGGER.info(message);
+	public static boolean shouldRefill;
+	private static World lastWorld;
+	private static EntityPlayer lastEntityPlayer;
+	private static ItemStack lastStackToGrab;
+	private static int lastSlotIDToConsume;
+	private static int lastSlotIDToPlace;
+
+	@Override
+	public void onInitialize() {
+		LOGGER.info("AutoRefill initialized.");
 	}
 
-	public static void OnBlockPlaced(EntityLiving entityLiving, World world, boolean ignoreSizeCheck) {
+	public static void CheckRefill(EntityLiving entityLiving, World world, boolean ignoreSizeCheck) {
 		ItemStack currentStack = entityLiving.getHeldItem();
 		int currentStackSize = currentStack.stackSize;
 
@@ -41,36 +49,26 @@ public class AutoRefill implements ModInitializer {
 
 				ItemStack stackToGrab = ItemStack.copyItemStack(entityPlayer.inventory.mainInventory[i]);
 
-				if(i < currentSelectedSlot)
-				{
-					for (int j = 0; j < currentSelectedSlot; j++)
-					{
-						if(entityPlayer.inventory.mainInventory[j] == null)
-							continue;
+				shouldRefill = true;
+				lastWorld = world;
 
-						if(entityPlayer.inventory.mainInventory[j].itemID == currentStack.itemID)
-						{
-							print("Found a stack to consume at: " + j);
-							stackToGrab.stackSize += entityPlayer.inventory.mainInventory[j].stackSize;
-							entityPlayer.inventory.setInventorySlotContents(j, null);
-						}
-					}
-					stackToGrab.stackSize--;
-				}
+				lastEntityPlayer = entityPlayer;
+				lastStackToGrab = stackToGrab;
 
-				entityPlayer.inventory.setInventorySlotContents(i, null);
-				entityPlayer.inventory.insertItem(stackToGrab, true);
-
-				print(currentSelectedSlot + " " + (i));
-
-				float pitch = (world.rand.nextFloat() - world.rand.nextFloat()) * 0.2F + 1;
-				world.playSoundAtEntity((Entity)null, entityLiving, "random.pop", .5f, pitch);
+				lastSlotIDToConsume = i;
+				lastSlotIDToPlace = currentSelectedSlot;
 				break;
 			}
 		}
 	}
-    @Override
-    public void onInitialize() {
-        LOGGER.info("AutoRefill initialized.");
-    }
+
+	public static void DoRefill(){
+		lastEntityPlayer.inventory.setInventorySlotContents(lastSlotIDToConsume, null);
+		lastEntityPlayer.inventory.setInventorySlotContents(lastSlotIDToPlace, lastStackToGrab);
+
+		float pitch = (lastWorld.rand.nextFloat() - lastWorld.rand.nextFloat()) * 0.2F + 1;
+		lastWorld.playSoundAtEntity((Entity)null, lastEntityPlayer, "random.pop", .5f, pitch);
+
+		AutoRefill.shouldRefill = false;
+	}
 }

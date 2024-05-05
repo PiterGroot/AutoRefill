@@ -14,9 +14,9 @@ import net.minecraft.core.world.World;
 @Mixin(value = Block.class, remap = false)
 public abstract class BlockMixin
 {
-	@Inject(method = "onBlockPlaced", at = @At("HEAD"))
+	@Inject(method = "onBlockPlaced", at = @At("TAIL"))
 	public void OnBlockPlaced(World world, int x, int y, int z, Side side, EntityLiving entity, double sideHeight, CallbackInfo ci)
 	{
-		AutoRefill.OnBlockPlaced(entity, world, false);
+		AutoRefill.CheckRefill(entity, world, false);
 	}
 }

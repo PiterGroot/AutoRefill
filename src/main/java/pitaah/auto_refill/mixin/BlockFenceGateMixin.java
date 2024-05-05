@@ -17,6 +17,6 @@ public abstract class BlockFenceGateMixin
 	@Inject(method = "onBlockPlaced", at = @At("HEAD"))
 	public void OnBlockFenceGatePlaced(World world, int x, int y, int z, Side side, EntityLiving entity, double sideHeight, CallbackInfo ci)
 	{
-		AutoRefill.OnBlockPlaced(entity, world, false);
+		AutoRefill.CheckRefill(entity, world, false);
 	}
 }

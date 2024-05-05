@@ -17,7 +17,6 @@ public abstract class BlockSlabPaintedMixin
 	@Inject(method = "onBlockPlaced", at = @At("HEAD"))
 	public void OnBlockSlabPaintedPlaced(World world, int x, int y, int z, Side side, EntityLiving entity, double sideHeight, CallbackInfo ci)
 	{
-		AutoRefill.print("yhas");
-		AutoRefill.OnBlockPlaced(entity, world, true);
+		AutoRefill.CheckRefill(entity, world, true);
 	}
 }
