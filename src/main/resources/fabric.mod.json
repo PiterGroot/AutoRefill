@@ -3,15 +3,15 @@
   "id": "auto_refill",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "Cool test mod.",
+  "name": "Auto Refill",
+  "description": "A small QoL mod for inventory management.",
   "authors": [
     "Piter Groot"
   ],
-  "contact": {
-    "homepage": "",
-    "sources": ""
-  },
+	"contact": {
+		"homepage": "https://github.com/PiterGroot/AutoRefill",
+		"issues": "https://github.com/PiterGroot/AutoRefill/issues"
+	},
 
 	"icon": "icon.png",
   "license": "CC0-1.0",
