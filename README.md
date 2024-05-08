@@ -7,7 +7,8 @@
 
 https://github.com/PiterGroot/AutoRefill/assets/70685433/9360e4f0-bc81-4d4f-90ca-8cb6f459b491
 
-#### Known issues:
-* Placing full slabs not yet supported.
-* Refill not yet supported for items.
+#### Known issues / current limitations:
+* Placing full slabs not working correctly.
+* Refill not yet supported for general items.
+* No multiplayer support
 
