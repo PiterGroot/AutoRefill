@@ -15,8 +15,8 @@ public class AutoRefill implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	public static boolean shouldRefill;
-	private static World lastWorld;
-	private static EntityPlayer lastEntityPlayer;
+	public static World lastWorld;
+	public static EntityPlayer lastEntityPlayer;
 	private static ItemStack lastStackToGrab;
 	private static int lastSlotIDToConsume;
 	private static int lastSlotIDToPlace;
@@ -26,16 +26,44 @@ public class AutoRefill implements ModInitializer {
 		LOGGER.info("AutoRefill initialized.");
 	}
 
-	public static void CheckRefill(EntityLiving entityLiving, World world, boolean ignoreSizeCheck) {
-		ItemStack currentStack = entityLiving.getHeldItem();
-		int currentStackSize = currentStack.stackSize;
+	public static void CheckRefillFromDropping(boolean ignoreSizeCheck)
+	{
+		ItemStack currentStack = lastEntityPlayer.getHeldItem();
 
-		if(ignoreSizeCheck)  currentStackSize--;
-		if(currentStackSize < 0) currentStackSize = 0;
+		System.out.println(currentStack);
 
-		if(currentStackSize > 0)
+		if(currentStack == null)
 			return;
 
+		if(!ignoreSizeCheck){
+			int currentStackSize = currentStack.stackSize;
+			if(currentStackSize > 1)
+				return;
+		}
+
+		DoRefillCheck(currentStack, lastEntityPlayer, lastWorld, ignoreSizeCheck);
+	}
+
+	public static void CheckRefill(EntityLiving entityLiving, World world, boolean ignoreSizeCheck) {
+		ItemStack currentStack = entityLiving.getHeldItem();
+
+		if (currentStack == null)
+			return;
+
+		int currentStackSize = currentStack.stackSize;
+
+		if (ignoreSizeCheck) {
+			currentStackSize--;
+			if (currentStackSize < 0) currentStackSize = 0;
+		}
+
+		if (currentStackSize > 0)
+			return;
+
+		DoRefillCheck(currentStack, entityLiving, world, ignoreSizeCheck);
+	}
+
+	private static void DoRefillCheck(ItemStack currentStack, EntityLiving entityLiving, World world, boolean ignoreSizeCheck) {
 		EntityPlayer entityPlayer = (EntityPlayer)entityLiving;
 		for (int i = 0; i < entityPlayer.inventory.mainInventory.length; i++) {
 			if(entityPlayer.inventory.mainInventory[i] == null)
@@ -52,11 +80,11 @@ public class AutoRefill implements ModInitializer {
 				shouldRefill = true;
 				lastWorld = world;
 
-				lastEntityPlayer = entityPlayer;
 				lastStackToGrab = stackToGrab;
 
 				lastSlotIDToConsume = i;
 				lastSlotIDToPlace = currentSelectedSlot;
+				System.out.println("Should do refill");
 				break;
 			}
 		}

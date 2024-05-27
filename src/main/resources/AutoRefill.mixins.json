@@ -21,7 +21,8 @@
       "BlockTileEntityRotatableMixin",
       "BlockTorchMixin",
       "BlockTrapDoorMixin",
-      "PlayerControllerMixin"
+      "PlayerControllerMixin",
+      "EntityPlayerMixin"
     ],
     "client": [
     ],
