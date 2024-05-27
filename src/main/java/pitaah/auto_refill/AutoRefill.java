@@ -26,11 +26,9 @@ public class AutoRefill implements ModInitializer {
 		LOGGER.info("AutoRefill initialized.");
 	}
 
-	public static void CheckRefillFromDropping(boolean ignoreSizeCheck)
+	public static void CheckRefillFromDropping(EntityPlayer player, boolean ignoreSizeCheck)
 	{
-		ItemStack currentStack = lastEntityPlayer.getHeldItem();
-
-		System.out.println(currentStack);
+		ItemStack currentStack = player.getHeldItem();
 
 		if(currentStack == null)
 			return;
@@ -41,7 +39,7 @@ public class AutoRefill implements ModInitializer {
 				return;
 		}
 
-		DoRefillCheck(currentStack, lastEntityPlayer, lastWorld, ignoreSizeCheck);
+		DoRefillCheck(currentStack, player, player.world, ignoreSizeCheck);
 	}
 
 	public static void CheckRefill(EntityLiving entityLiving, World world, boolean ignoreSizeCheck) {
@@ -78,12 +76,15 @@ public class AutoRefill implements ModInitializer {
 				ItemStack stackToGrab = ItemStack.copyItemStack(entityPlayer.inventory.mainInventory[i]);
 
 				shouldRefill = true;
+
+				lastEntityPlayer = entityPlayer;
 				lastWorld = world;
 
 				lastStackToGrab = stackToGrab;
 
 				lastSlotIDToConsume = i;
 				lastSlotIDToPlace = currentSelectedSlot;
+
 				System.out.println("Should do refill");
 				break;
 			}

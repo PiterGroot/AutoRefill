@@ -13,13 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = PlayerController.class, remap = false)
 public abstract class PlayerControllerMixin {
 
-	@Inject(method = "initPlayer", at = @At("HEAD"))
-	private void OnInitPlayer(EntityPlayer player, CallbackInfo ci)
-	{
-		AutoRefill.lastEntityPlayer = player;
-		AutoRefill.lastWorld = player.world;
-	}
-
 	@Inject(method = "tick", at = @At("TAIL"))
 	public void OnTick(CallbackInfo ci)
 	{

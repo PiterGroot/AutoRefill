@@ -4,25 +4,10 @@
     "package": "pitaah.auto_refill.mixin",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
-      "BlockAxisAlignedMixin",
-      "BlockMixin",
-      "BlockButtonMixin",
-      "BlockChestMixin",
-      "BlockSlabMixin",
-      "BlockSlabPaintedMixin",
-      "BlockStairsMixin",
-      "BlockFenceGateMixin",
-      "BlockLanternFireflyMixin",
-      "BlockLeverMixin",
-      "BlockPistonBaseMixin",
-      "BlockRedstoneRepeaterMixin",
-      "BlockRotatableMixin",
-      "BlockRotatableHorizontalMixin",
-      "BlockTileEntityRotatableMixin",
-      "BlockTorchMixin",
-      "BlockTrapDoorMixin",
       "PlayerControllerMixin",
-      "EntityPlayerMixin"
+      "EntityPlayerMixin",
+      "ItemDyeMixin",
+      "ItemStackMixin"
     ],
     "client": [
     ],
