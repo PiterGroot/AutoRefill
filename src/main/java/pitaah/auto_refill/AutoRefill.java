@@ -26,6 +26,18 @@ public class AutoRefill implements ModInitializer {
 		LOGGER.info("AutoRefill initialized.");
 	}
 
+
+	public static void CheckRefillForDurability(EntityPlayer player, boolean ignoreSizeCheck)
+	{
+		ItemStack currentStack = player.getHeldItem();
+
+		if(currentStack == null)
+			return;
+
+		if(currentStack.getMetadata() <= 0)
+			DoRefillCheck(currentStack, player, player.world, ignoreSizeCheck);
+	}
+
 	public static void CheckRefillFromDropping(EntityPlayer player, boolean ignoreSizeCheck)
 	{
 		ItemStack currentStack = player.getHeldItem();
