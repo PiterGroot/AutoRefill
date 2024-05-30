@@ -4,15 +4,32 @@ import net.fabricmc.api.ModInitializer;
 import net.minecraft.core.entity.Entity;
 import net.minecraft.core.entity.EntityLiving;
 import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.world.World;
 
+import pitaah.auto_refill.item.AutoRefillIconItem;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import turniplabs.halplibe.helper.ItemHelper;
+import turniplabs.halplibe.util.ConfigHandler;
+import turniplabs.halplibe.util.GameStartEntrypoint;
+import java.util.Properties;
 
-public class AutoRefill implements ModInitializer {
+public class AutoRefill implements ModInitializer, GameStartEntrypoint {
     public static final String MOD_ID = "auto_refill";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
+	public static final int STARTING_ITEM_ID;
+
+	static {
+		Properties prop = new Properties();
+		prop.setProperty("starting_item_id", "26680");
+		ConfigHandler config = new ConfigHandler(MOD_ID, prop);
+		STARTING_ITEM_ID = config.getInt("starting_item_id");
+		config.updateConfig();
+	}
 
 	public static boolean shouldRefill;
 	public static World lastWorld;
@@ -21,14 +38,25 @@ public class AutoRefill implements ModInitializer {
 	private static int lastSlotIDToConsume;
 	private static int lastSlotIDToPlace;
 
+	public static Item AutoRefillDebugIcon;
 	@Override
-	public void onInitialize() {
-		LOGGER.info("AutoRefill initialized.");
+	public void onInitialize() { LOGGER.info("AutoRefill initialized."); }
+
+	@Override
+	public void beforeGameStart() {
+		AutoRefillDebugIcon = ItemHelper.createItem(MOD_ID, new AutoRefillIconItem("debug", STARTING_ITEM_ID), "icon.png");
 	}
 
+	@Override
+	public void afterGameStart() {
+		AutoRefillModSettingsRegister.onLoad();
+	}
 
 	public static void CheckRefillForDurability(EntityPlayer player, boolean ignoreSizeCheck)
 	{
+		if(!AutoRefillModSettingsRegister.modSettings.autoRefillDoRefillOnTools().value)
+			return;
+
 		ItemStack currentStack = player.getHeldItem();
 
 		if(currentStack == null)
@@ -40,6 +68,9 @@ public class AutoRefill implements ModInitializer {
 
 	public static void CheckRefillFromDropping(EntityPlayer player, boolean ignoreSizeCheck)
 	{
+		if(!AutoRefillModSettingsRegister.modSettings.autoRefillDoRefillOnDrop().value)
+			return;
+
 		ItemStack currentStack = player.getHeldItem();
 
 		if(currentStack == null)
@@ -96,19 +127,26 @@ public class AutoRefill implements ModInitializer {
 
 				lastSlotIDToConsume = i;
 				lastSlotIDToPlace = currentSelectedSlot;
-
-				System.out.println("Should do refill");
 				break;
 			}
 		}
 	}
 
 	public static void DoRefill(){
+		if(!AutoRefillModSettingsRegister.modSettings.autoRefillDoAnyRefill().value)
+		{
+			shouldRefill = false;
+			return;
+		}
+
 		lastEntityPlayer.inventory.setInventorySlotContents(lastSlotIDToConsume, null);
 		lastEntityPlayer.inventory.setInventorySlotContents(lastSlotIDToPlace, lastStackToGrab);
 
-		float pitch = (lastWorld.rand.nextFloat() - lastWorld.rand.nextFloat()) * 0.2F + 1;
-		lastWorld.playSoundAtEntity((Entity)null, lastEntityPlayer, "random.pop", .5f, pitch);
+		if(AutoRefillModSettingsRegister.modSettings.autoRefillPlaySound().value)
+		{
+			float pitch = (lastWorld.rand.nextFloat() - lastWorld.rand.nextFloat()) * 0.2F + 1;
+			lastWorld.playSoundAtEntity((Entity)null, lastEntityPlayer, "random.pop", .5f, pitch);
+		}
 
 		AutoRefill.shouldRefill = false;
 	}

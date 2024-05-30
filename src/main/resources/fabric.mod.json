@@ -20,7 +20,16 @@
   "entrypoints": {
     "main": [
 			"pitaah.auto_refill.AutoRefill"
-    ]
+    ],
+		"beforeGameStart": [
+			"pitaah.auto_refill.AutoRefill"
+		],
+		"afterGameStart": [
+			"pitaah.auto_refill.AutoRefill"
+		],
+		"modmenu": [
+			"pitaah.auto_refill.entryplugins.modmenu.ModMenuModule"
+		]
 	},
   "mixins": [
       "AutoRefill.mixins.json"

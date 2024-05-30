@@ -1,0 +1,9 @@
+AutoRefill = AutoRefill
+options.playRefillSound=Play sound on refill
+options.useRefillForDropping=Enable refill for dropping
+
+options.useAnyRefill=Enable all refill
+options.useRefillForTools=Enable refill for tools
+options.useRefillOnItems=Enable refill on items/consumables
+
+item.auto_refill.debug.name=debug item
