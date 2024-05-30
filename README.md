@@ -1,5 +1,5 @@
 ![icon](https://github.com/PiterGroot/AutoRefill/assets/70685433/3da2cf6d-eb32-49d6-831d-4223c1453601)
-# AutoRefill (mod wip)
+# AutoRefill - BTA 7.1_01
 
 #### A singleplayer minecraft beta mod specifically made for Minecraft Better Than Adventure 7.1
 
