@@ -7,7 +7,6 @@
 
 https://github.com/PiterGroot/AutoRefill/assets/70685433/9360e4f0-bc81-4d4f-90ca-8cb6f459b491
 
-#### Known issues / current limitations:
-* Refill not yet supported for tools/equipment.
-* Not designed for multiplayer
+#### Disclaimer:
+* This mod is not designed for multiplayer.
 
