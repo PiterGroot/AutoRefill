@@ -1,6 +1,4 @@
 package pitaah.auto_refill.mixin;
-import net.minecraft.core.entity.player.EntityPlayer;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import pitaah.auto_refill.AutoRefill;
 
 import net.minecraft.client.player.controller.PlayerController;
