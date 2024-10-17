@@ -8,6 +8,7 @@ public interface IAutoRefillModOptions {
 	BooleanOption autoRefillDoRefillOnDrop();
 
 	BooleanOption autoRefillDoRefillOnTools();
+	BooleanOption autoRefillDoRefillOnFood();
 
 	BooleanOption autoRefillDoAnyRefill();
 

@@ -22,6 +22,7 @@ public class AutoRefillModSettingsRegister {
 			.withComponent(new BooleanOptionComponent(modSettings.autoRefillPlaySound()))
 			.withComponent(new BooleanOptionComponent(modSettings.autoRefillDoRefillOnDrop()))
 			.withComponent(new BooleanOptionComponent(modSettings.autoRefillDoRefillOnTools()))
+			.withComponent(new BooleanOptionComponent(modSettings.autoRefillDoRefillOnFood()))
 		    .withComponent(new BooleanOptionComponent(modSettings.autoRefillDoAnyRefillOnItems()));
 
 		OptionsPages.register(refillOptions);

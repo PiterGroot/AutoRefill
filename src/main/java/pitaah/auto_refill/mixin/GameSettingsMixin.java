@@ -21,6 +21,9 @@ public class GameSettingsMixin implements IAutoRefillModOptions {
 	public final BooleanOption useRefillForTools = new BooleanOption(thisAs, "useRefillForTools", true);
 
 	@Unique
+	public final BooleanOption useRefillForFood = new BooleanOption(thisAs, "useRefillForFood", true);
+
+	@Unique
 	public final BooleanOption useAnyRefillOnItems = new BooleanOption(thisAs, "useRefillOnItems", true);
 
 	@Unique
@@ -36,6 +39,9 @@ public class GameSettingsMixin implements IAutoRefillModOptions {
 
 	@Override
 	public BooleanOption autoRefillDoRefillOnTools() { return useRefillForTools; }
+
+	@Override
+	public BooleanOption autoRefillDoRefillOnFood() { return useRefillForFood; }
 
 	@Override
 	public BooleanOption autoRefillDoAnyRefill() { return useAnyRefill; }

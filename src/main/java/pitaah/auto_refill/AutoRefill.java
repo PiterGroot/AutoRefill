@@ -37,14 +37,13 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint {
 	private static ItemStack lastStackToGrab;
 	private static int lastSlotIDToConsume;
 	private static int lastSlotIDToPlace;
-
 	public static Item AutoRefillDebugIcon;
 	@Override
 	public void onInitialize() { LOGGER.info("AutoRefill initialized."); }
 
 	@Override
 	public void beforeGameStart() {
-		AutoRefillDebugIcon = ItemHelper.createItem(MOD_ID, new AutoRefillIconItem("debug", STARTING_ITEM_ID), "icon.png");
+		AutoRefillDebugIcon = ItemHelper.createItem(MOD_ID, new AutoRefillIconItem("debug", STARTING_ITEM_ID));
 	}
 
 	@Override
@@ -62,7 +61,7 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint {
 		if(currentStack == null)
 			return;
 
-		if(currentStack.getMetadata() <= 0)
+		if(currentStack.stackSize <= 0 && currentStack.getMetadata() <= 0)
 			DoRefillCheck(currentStack, player, player.world, ignoreSizeCheck);
 	}
 
@@ -110,6 +109,9 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint {
 			if(entityPlayer.inventory.mainInventory[i] == null)
 				continue;
 
+			if(!AutoRefillModSettingsRegister.modSettings.autoRefillDoRefillOnFood().value && IsFoodItem(currentStack))
+				continue;;
+
 			if(entityPlayer.inventory.mainInventory[i].itemID == currentStack.itemID) {
 				int currentSelectedSlot = entityPlayer.inventory.currentItem;
 
@@ -149,5 +151,14 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint {
 		}
 
 		AutoRefill.shouldRefill = false;
+	}
+
+	private static boolean IsFoodItem(ItemStack itemStack)
+	{
+		Item item = itemStack.getItem();
+
+		return  (item.id == Item.foodApple.id || item.id == Item.foodAppleGold.id || item.id == Item.foodBread.id || item.id == Item.foodCake.id
+		|| item.id == Item.foodCookie.id || item.id == Item.foodCherry.id || item.id == Item.foodPorkchopRaw.id || item.id == Item.foodFishCooked.id
+		|| item.id == Item.foodFishRaw.id || item.id == Item.foodPorkchopCooked.id || item.id == Item.foodPumpkinPie.id || item.id == Item.foodStewMushroom.id);
 	}
 }

@@ -6,7 +6,6 @@
     "mixins": [
       "PlayerControllerMixin",
       "EntityPlayerMixin",
-      "ItemDyeMixin",
       "ItemStackMixin"
     ],
     "client": [
