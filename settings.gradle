@@ -1,3 +1,4 @@
+/*
 pluginManagement {
     repositories {
         maven {
@@ -14,4 +15,27 @@ pluginManagement {
             url = 'https://maven.glass-launcher.net/babric'
         }
     }
+}*/
+
+pluginManagement {
+	repositories {
+		gradlePluginPortal()
+		maven {
+			name = 'Fabric'
+			url = 'https://maven.fabricmc.net/'
+		}
+		maven {
+			name = 'Jitpack'
+			url = 'https://jitpack.io'
+		}
+		maven {
+			name = 'Babric'
+			url = 'https://maven.glass-launcher.net/babric'
+		}
+		maven {
+			name = 'SignalumMavenInfrastructure'
+			url = 'https://maven.thesignalumproject.net/infrastructure'
+		}
+	}
 }
+

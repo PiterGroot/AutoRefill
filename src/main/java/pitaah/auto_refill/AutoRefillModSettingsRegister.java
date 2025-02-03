@@ -1,8 +1,8 @@
 package pitaah.auto_refill;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.options.GuiOptions;
+import net.minecraft.client.gui.Screen;
+import net.minecraft.client.gui.options.ScreenOptions;
 import net.minecraft.client.gui.options.components.BooleanOptionComponent;
 import net.minecraft.client.gui.options.data.OptionsPage;
 import net.minecraft.client.gui.options.data.OptionsPages;
@@ -15,8 +15,10 @@ public class AutoRefillModSettingsRegister {
 	public static OptionsPage refillOptions;
 
 	public static void onLoad(){
-		gameSettings = Minecraft.getMinecraft(Minecraft.class).gameSettings;
+		gameSettings = Minecraft.getMinecraft().gameSettings;
 		modSettings = (IAutoRefillModOptions) gameSettings;
+
+
 		refillOptions = new OptionsPage("AutoRefill", new ItemStack(AutoRefill.AutoRefillDebugIcon))
 			.withComponent(new BooleanOptionComponent(modSettings.autoRefillDoAnyRefill()))
 			.withComponent(new BooleanOptionComponent(modSettings.autoRefillPlaySound()))
@@ -28,7 +30,7 @@ public class AutoRefillModSettingsRegister {
 		OptionsPages.register(refillOptions);
 	}
 
-	public static GuiOptions getOptionsPage(GuiScreen parent){
-		return new GuiOptions(parent, refillOptions);
+	public static ScreenOptions getOptionsPage(Screen parent){
+		return new ScreenOptions(parent, refillOptions);
 	}
 }

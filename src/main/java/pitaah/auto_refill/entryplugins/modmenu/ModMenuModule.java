@@ -1,7 +1,7 @@
 package pitaah.auto_refill.entryplugins.modmenu;
 
 import io.github.prospector.modmenu.api.ModMenuApi;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.Screen;
 import pitaah.auto_refill.AutoRefill;
 import pitaah.auto_refill.AutoRefillModSettingsRegister;
 
@@ -16,7 +16,7 @@ public class ModMenuModule implements ModMenuApi {
 	}
 
 	@Override
-	public Function<GuiScreen, ? extends GuiScreen> getConfigScreenFactory() {
+	public Function<Screen, ? extends Screen> getConfigScreenFactory() {
 		return (AutoRefillModSettingsRegister::getOptionsPage);
 	}
 }

@@ -8,3 +8,8 @@ options.useRefillForFood=Enable refill for food items
 options.useRefillOnItems=Enable refill on general items/consumables
 
 item.auto_refill.debug.name=debug item
+
+item.auto_refill.stick.carrot.name=Carrot on a Stick
+item.auto_refill.stick.carrot.desc=Pigs may be interested in this.
+item.auto_refill.bamboo.name=BAMBOO
+item.auto_refill.bamboo.desc=STICKY

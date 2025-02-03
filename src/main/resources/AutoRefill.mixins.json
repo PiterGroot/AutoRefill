@@ -9,7 +9,7 @@
       "ItemStackMixin"
     ],
     "client": [
-      "GameSettingsMixin"
+      "GameSettingsMixin",
     ],
     "injectors": {
         "defaultRequire": 1

@@ -1,7 +1,7 @@
 package pitaah.auto_refill.mixin;
 
 import net.minecraft.core.entity.Entity;
-import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +15,7 @@ import pitaah.auto_refill.AutoRefillModSettingsRegister;
 public abstract class ItemStackMixin {
 
 	@Inject(method = "consumeItem", at = @At("HEAD"))
-	private void OnConsumeItem(EntityPlayer entityplayer, CallbackInfoReturnable<Boolean> ci)
+	private void OnConsumeItem(Player entityplayer, CallbackInfoReturnable<Boolean> ci)
 	{
 		if(!AutoRefillModSettingsRegister.modSettings.autoRefillDoAnyRefillOnItems().value)
 			return;
@@ -26,6 +26,6 @@ public abstract class ItemStackMixin {
 	@Inject(method = "damageItem", at = @At("TAIL"))
 	private void OndamageItem(int i, Entity entity, CallbackInfo ci)
 	{
-		AutoRefill.CheckRefillForDurability((EntityPlayer)entity, true);
+		AutoRefill.CheckRefillForDurability((Player)entity, true);
 	}
 }

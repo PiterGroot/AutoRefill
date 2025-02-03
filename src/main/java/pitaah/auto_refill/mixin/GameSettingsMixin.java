@@ -1,6 +1,6 @@
 package pitaah.auto_refill.mixin;
 
-import net.minecraft.client.option.BooleanOption;
+import net.minecraft.client.option.OptionBoolean;
 import net.minecraft.client.option.GameSettings;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -12,40 +12,40 @@ public class GameSettingsMixin implements IAutoRefillModOptions {
 	private final GameSettings thisAs = (GameSettings)(Object)this;
 
 	@Unique
-	public final BooleanOption playRefillSound = new BooleanOption(thisAs, "playRefillSound", true);
+	public final OptionBoolean playRefillSound = new OptionBoolean(thisAs, "playRefillSound", true);
 
 	@Unique
-	public final BooleanOption useRefillForDropping = new BooleanOption(thisAs, "useRefillForDropping", true);
+	public final OptionBoolean useRefillForDropping = new OptionBoolean(thisAs, "useRefillForDropping", true);
 
 	@Unique
-	public final BooleanOption useRefillForTools = new BooleanOption(thisAs, "useRefillForTools", true);
+	public final OptionBoolean useRefillForTools = new OptionBoolean(thisAs, "useRefillForTools", true);
 
 	@Unique
-	public final BooleanOption useRefillForFood = new BooleanOption(thisAs, "useRefillForFood", true);
+	public final OptionBoolean useRefillForFood = new OptionBoolean(thisAs, "useRefillForFood", true);
 
 	@Unique
-	public final BooleanOption useAnyRefillOnItems = new BooleanOption(thisAs, "useRefillOnItems", true);
+	public final OptionBoolean useAnyRefillOnItems = new OptionBoolean(thisAs, "useRefillOnItems", true);
 
 	@Unique
-	public final BooleanOption useAnyRefill = new BooleanOption(thisAs, "useAnyRefill", true);
+	public final OptionBoolean useAnyRefill = new OptionBoolean(thisAs, "useAnyRefill", true);
 
 	@Override
-	public BooleanOption autoRefillPlaySound() { return playRefillSound; }
+	public OptionBoolean autoRefillPlaySound() { return playRefillSound; }
 
 	@Override
-	public BooleanOption autoRefillDoRefillOnDrop() {
+	public OptionBoolean autoRefillDoRefillOnDrop() {
 		return useRefillForDropping;
 	}
 
 	@Override
-	public BooleanOption autoRefillDoRefillOnTools() { return useRefillForTools; }
+	public OptionBoolean autoRefillDoRefillOnTools() { return useRefillForTools; }
 
 	@Override
-	public BooleanOption autoRefillDoRefillOnFood() { return useRefillForFood; }
+	public OptionBoolean autoRefillDoRefillOnFood() { return useRefillForFood; }
 
 	@Override
-	public BooleanOption autoRefillDoAnyRefill() { return useAnyRefill; }
+	public OptionBoolean autoRefillDoAnyRefill() { return useAnyRefill; }
 
 	@Override
-	public BooleanOption autoRefillDoAnyRefillOnItems() { return useAnyRefillOnItems; }
+	public OptionBoolean autoRefillDoAnyRefillOnItems() { return useAnyRefillOnItems; }
 }

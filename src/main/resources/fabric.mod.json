@@ -27,6 +27,9 @@
 		"afterGameStart": [
 			"pitaah.auto_refill.AutoRefill"
 		],
+		"initModels": [
+			"pitaah.auto_refill.AutoRefill"
+		],
 		"modmenu": [
 			"pitaah.auto_refill.entryplugins.modmenu.ModMenuModule"
 		]

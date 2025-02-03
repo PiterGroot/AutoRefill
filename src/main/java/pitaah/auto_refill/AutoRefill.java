@@ -1,23 +1,35 @@
 package pitaah.auto_refill;
 
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.client.render.EntityRenderDispatcher;
+import net.minecraft.client.render.TileEntityRenderDispatcher;
+import net.minecraft.client.render.block.color.BlockColorDispatcher;
+import net.minecraft.client.render.block.model.BlockModelDispatcher;
+import net.minecraft.client.render.item.model.ItemModelDispatcher;
+import net.minecraft.client.render.item.model.ItemModelStandard;
+import net.minecraft.client.render.texture.stitcher.TextureRegistry;
 import net.minecraft.core.entity.Entity;
-import net.minecraft.core.entity.EntityLiving;
-import net.minecraft.core.entity.player.EntityPlayer;
+import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
+import net.minecraft.core.item.Items;
+import net.minecraft.core.util.collection.NamespaceID;
 import net.minecraft.core.world.World;
 
 import pitaah.auto_refill.item.AutoRefillIconItem;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import turniplabs.halplibe.helper.ItemHelper;
+import turniplabs.halplibe.helper.ItemBuilder;
+import turniplabs.halplibe.helper.ModelHelper;
 import turniplabs.halplibe.util.ConfigHandler;
 import turniplabs.halplibe.util.GameStartEntrypoint;
-import java.util.Properties;
+import turniplabs.halplibe.util.ModelEntrypoint;
 
-public class AutoRefill implements ModInitializer, GameStartEntrypoint {
+import java.util.Properties;
+import java.util.function.Supplier;
+
+public class AutoRefill implements ModInitializer, GameStartEntrypoint, ModelEntrypoint {
     public static final String MOD_ID = "auto_refill";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
@@ -33,7 +45,7 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint {
 
 	public static boolean shouldRefill;
 	public static World lastWorld;
-	public static EntityPlayer lastEntityPlayer;
+	public static Player lastEntityPlayer;
 	private static ItemStack lastStackToGrab;
 	private static int lastSlotIDToConsume;
 	private static int lastSlotIDToPlace;
@@ -42,8 +54,24 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint {
 	public void onInitialize() { LOGGER.info("AutoRefill initialized."); }
 
 	@Override
-	public void beforeGameStart() {
-		AutoRefillDebugIcon = ItemHelper.createItem(MOD_ID, new AutoRefillIconItem("debug", STARTING_ITEM_ID));
+	public void beforeGameStart()
+	{
+		AutoRefillDebugIcon = new ItemBuilder(MOD_ID)
+			.build(new Item("debug", MOD_ID + ":" + "item/debug", STARTING_ITEM_ID));
+
+		LOGGER.info(AutoRefillDebugIcon.namespaceID.toString());
+	}
+
+	@Override
+	public void initItemModels(ItemModelDispatcher dispatcher)
+	{
+		LOGGER.info("initItemModels!");
+
+		ModelHelper.setItemModel(AutoRefillDebugIcon, () -> {
+			ItemModelStandard model = new ItemModelStandard(AutoRefillDebugIcon, MOD_ID);
+			model.icon = TextureRegistry.getTexture(AutoRefillDebugIcon.namespaceID);
+			return  model;
+		});
 	}
 
 	@Override
@@ -51,7 +79,7 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint {
 		AutoRefillModSettingsRegister.onLoad();
 	}
 
-	public static void CheckRefillForDurability(EntityPlayer player, boolean ignoreSizeCheck)
+	public static void CheckRefillForDurability(Player player, boolean ignoreSizeCheck)
 	{
 		if(!AutoRefillModSettingsRegister.modSettings.autoRefillDoRefillOnTools().value)
 			return;
@@ -65,7 +93,7 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint {
 			DoRefillCheck(currentStack, player, player.world, ignoreSizeCheck);
 	}
 
-	public static void CheckRefillFromDropping(EntityPlayer player, boolean ignoreSizeCheck)
+	public static void CheckRefillFromDropping(Player player, boolean ignoreSizeCheck)
 	{
 		if(!AutoRefillModSettingsRegister.modSettings.autoRefillDoRefillOnDrop().value)
 			return;
@@ -84,7 +112,7 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint {
 		DoRefillCheck(currentStack, player, player.world, ignoreSizeCheck);
 	}
 
-	public static void CheckRefill(EntityLiving entityLiving, World world, boolean ignoreSizeCheck) {
+	public static void CheckRefill(Player entityLiving, World world, boolean ignoreSizeCheck) {
 		ItemStack currentStack = entityLiving.getHeldItem();
 
 		if (currentStack == null)
@@ -103,8 +131,8 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint {
 		DoRefillCheck(currentStack, entityLiving, world, ignoreSizeCheck);
 	}
 
-	private static void DoRefillCheck(ItemStack currentStack, EntityLiving entityLiving, World world, boolean ignoreSizeCheck) {
-		EntityPlayer entityPlayer = (EntityPlayer)entityLiving;
+	private static void DoRefillCheck(ItemStack currentStack, Player entityLiving, World world, boolean ignoreSizeCheck) {
+		Player entityPlayer = (Player)entityLiving;
 		for (int i = 0; i < entityPlayer.inventory.mainInventory.length; i++) {
 			if(entityPlayer.inventory.mainInventory[i] == null)
 				continue;
@@ -113,7 +141,7 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint {
 				continue;;
 
 			if(entityPlayer.inventory.mainInventory[i].itemID == currentStack.itemID) {
-				int currentSelectedSlot = entityPlayer.inventory.currentItem;
+				int currentSelectedSlot = entityPlayer.inventory.getCurrentItemIndex();
 
 				if(currentSelectedSlot == i)
 					continue;
@@ -141,8 +169,8 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint {
 			return;
 		}
 
-		lastEntityPlayer.inventory.setInventorySlotContents(lastSlotIDToConsume, null);
-		lastEntityPlayer.inventory.setInventorySlotContents(lastSlotIDToPlace, lastStackToGrab);
+		lastEntityPlayer.inventory.setItem(lastSlotIDToConsume, null);
+		lastEntityPlayer.inventory.setItem(lastSlotIDToPlace, lastStackToGrab);
 
 		if(AutoRefillModSettingsRegister.modSettings.autoRefillPlaySound().value)
 		{
@@ -157,8 +185,20 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint {
 	{
 		Item item = itemStack.getItem();
 
-		return  (item.id == Item.foodApple.id || item.id == Item.foodAppleGold.id || item.id == Item.foodBread.id || item.id == Item.foodCake.id
-		|| item.id == Item.foodCookie.id || item.id == Item.foodCherry.id || item.id == Item.foodPorkchopRaw.id || item.id == Item.foodFishCooked.id
-		|| item.id == Item.foodFishRaw.id || item.id == Item.foodPorkchopCooked.id || item.id == Item.foodPumpkinPie.id || item.id == Item.foodStewMushroom.id);
+		return  (item.id == Items.FOOD_APPLE.id || item.id == Items.FOOD_APPLE_GOLD.id || item.id == Items.FOOD_BREAD.id || item.id == Items.FOOD_CAKE.id
+		|| item.id == Items.FOOD_COOKIE.id || item.id == Items.FOOD_CHERRY.id || item.id == Items.FOOD_PORKCHOP_RAW.id || item.id == Items.FOOD_FISH_COOKED.id
+		|| item.id == Items.FOOD_FISH_RAW.id || item.id == Items.FOOD_PORKCHOP_COOKED.id || item.id == Items.FOOD_PUMPKIN_PIE.id || item.id == Items.FOOD_STEW_MUSHROOM.id);
 	}
+
+	@Override
+	public void initBlockModels(BlockModelDispatcher dispatcher) {}
+
+	@Override
+	public void initEntityModels(EntityRenderDispatcher dispatcher) {}
+
+	@Override
+	public void initTileEntityModels(TileEntityRenderDispatcher dispatcher) {}
+
+	@Override
+	public void initBlockColors(BlockColorDispatcher dispatcher) {}
 }

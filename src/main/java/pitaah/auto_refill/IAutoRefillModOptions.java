@@ -1,16 +1,16 @@
 package pitaah.auto_refill;
 
-import net.minecraft.client.option.BooleanOption;
+import net.minecraft.client.option.OptionBoolean;
 
 public interface IAutoRefillModOptions {
-	BooleanOption autoRefillPlaySound();
+	OptionBoolean autoRefillPlaySound();
 
-	BooleanOption autoRefillDoRefillOnDrop();
+	OptionBoolean autoRefillDoRefillOnDrop();
 
-	BooleanOption autoRefillDoRefillOnTools();
-	BooleanOption autoRefillDoRefillOnFood();
+	OptionBoolean autoRefillDoRefillOnTools();
+	OptionBoolean autoRefillDoRefillOnFood();
 
-	BooleanOption autoRefillDoAnyRefill();
+	OptionBoolean autoRefillDoAnyRefill();
 
-	BooleanOption autoRefillDoAnyRefillOnItems();
+	OptionBoolean autoRefillDoAnyRefillOnItems();
 }

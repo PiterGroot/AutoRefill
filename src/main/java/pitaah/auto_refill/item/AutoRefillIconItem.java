@@ -1,10 +1,10 @@
 package pitaah.auto_refill.item;
 
 import net.minecraft.core.item.Item;
+import pitaah.auto_refill.AutoRefill;
 
 public class AutoRefillIconItem extends Item {
-	public AutoRefillIconItem(String key, int id) {
-		super(key, id);
-		//notInCreativeMenu = false;
+	public AutoRefillIconItem(String name, String namespaceId, int id) {
+		super(name, namespaceId, id);
 	}
 }
