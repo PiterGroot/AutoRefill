@@ -13,10 +13,8 @@ import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.item.Items;
-import net.minecraft.core.util.collection.NamespaceID;
 import net.minecraft.core.world.World;
 
-import pitaah.auto_refill.item.AutoRefillIconItem;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +25,6 @@ import turniplabs.halplibe.util.GameStartEntrypoint;
 import turniplabs.halplibe.util.ModelEntrypoint;
 
 import java.util.Properties;
-import java.util.function.Supplier;
 
 public class AutoRefill implements ModInitializer, GameStartEntrypoint, ModelEntrypoint {
     public static final String MOD_ID = "auto_refill";
