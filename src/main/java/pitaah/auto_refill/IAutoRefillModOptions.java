@@ -1,6 +1,8 @@
 package pitaah.auto_refill;
 
 import net.minecraft.client.option.OptionBoolean;
+import net.minecraft.client.option.OptionFloat;
+import net.minecraft.client.option.OptionVolume;
 
 public interface IAutoRefillModOptions {
 	OptionBoolean autoRefillPlaySound();
@@ -13,4 +15,6 @@ public interface IAutoRefillModOptions {
 	OptionBoolean autoRefillDoAnyRefill();
 
 	OptionBoolean autoRefillDoAnyRefillOnItems();
+
+	OptionFloat autoRefillSoundVolume();
 }

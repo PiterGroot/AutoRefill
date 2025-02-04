@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Screen;
 import net.minecraft.client.gui.options.ScreenOptions;
 import net.minecraft.client.gui.options.components.BooleanOptionComponent;
+import net.minecraft.client.gui.options.components.FloatOptionComponent;
 import net.minecraft.client.gui.options.data.OptionsPage;
 import net.minecraft.client.gui.options.data.OptionsPages;
 import net.minecraft.client.option.GameSettings;
@@ -18,10 +19,10 @@ public class AutoRefillModSettingsRegister {
 		gameSettings = Minecraft.getMinecraft().gameSettings;
 		modSettings = (IAutoRefillModOptions) gameSettings;
 
-
 		refillOptions = new OptionsPage("AutoRefill", new ItemStack(AutoRefill.AutoRefillDebugIcon))
 			.withComponent(new BooleanOptionComponent(modSettings.autoRefillDoAnyRefill()))
 			.withComponent(new BooleanOptionComponent(modSettings.autoRefillPlaySound()))
+			.withComponent(new FloatOptionComponent(modSettings.autoRefillSoundVolume()))
 			.withComponent(new BooleanOptionComponent(modSettings.autoRefillDoRefillOnDrop()))
 			.withComponent(new BooleanOptionComponent(modSettings.autoRefillDoRefillOnTools()))
 			.withComponent(new BooleanOptionComponent(modSettings.autoRefillDoRefillOnFood()))

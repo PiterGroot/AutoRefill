@@ -8,11 +8,13 @@ import net.minecraft.client.render.block.model.BlockModelDispatcher;
 import net.minecraft.client.render.item.model.ItemModelDispatcher;
 import net.minecraft.client.render.item.model.ItemModelStandard;
 import net.minecraft.client.render.texture.stitcher.TextureRegistry;
+import net.minecraft.core.data.tag.Tag;
 import net.minecraft.core.entity.Entity;
 import net.minecraft.core.entity.player.Player;
 import net.minecraft.core.item.Item;
 import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.item.Items;
+import net.minecraft.core.item.tag.ItemTags;
 import net.minecraft.core.world.World;
 
 
@@ -54,9 +56,8 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint, ModelEnt
 	public void beforeGameStart()
 	{
 		AutoRefillDebugIcon = new ItemBuilder(MOD_ID)
+			.setTags(new Tag[]{ItemTags.NOT_IN_CREATIVE_MENU}) // Make sure mod icon cannot be accessed in the creative menu.
 			.build(new Item("debug", MOD_ID + ":" + "item/debug", STARTING_ITEM_ID));
-
-		LOGGER.info(AutoRefillDebugIcon.namespaceID.toString());
 	}
 
 	@Override
@@ -169,10 +170,12 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint, ModelEnt
 		lastEntityPlayer.inventory.setItem(lastSlotIDToConsume, null);
 		lastEntityPlayer.inventory.setItem(lastSlotIDToPlace, lastStackToGrab);
 
-		if(AutoRefillModSettingsRegister.modSettings.autoRefillPlaySound().value)
+		if(AutoRefillModSettingsRegister.modSettings.autoRefillPlaySound().value) // Play refill sound if it is enabled in the mod settings.
 		{
 			float pitch = (lastWorld.rand.nextFloat() - lastWorld.rand.nextFloat()) * 0.2F + 1;
-			lastWorld.playSoundAtEntity((Entity)null, lastEntityPlayer, "random.pop", .5f, pitch);
+			float soundVolume = AutoRefillModSettingsRegister.modSettings.autoRefillSoundVolume().value;
+
+			lastWorld.playSoundAtEntity((Entity)null, lastEntityPlayer, "random.pop", soundVolume, pitch);
 		}
 
 		AutoRefill.shouldRefill = false;
