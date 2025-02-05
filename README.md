@@ -2,7 +2,7 @@
 # AutoRefill - BTA 7.3
 <br>_Requires HalbLibe => 5.1.2_
 
-A singleplayer minecraft beta mod specifically made for Minecraft Better Than Adventure 7.2_01 and previous versions.
+A singleplayer minecraft beta mod specifically made for Minecraft Better Than Adventure 7.3 and previous versions.
 
 AutoRefill is a small QoL mod that automatically tries to replace the block stack you just fully consumed (if available) from one of your other inventory slots. This makes building for example a lot more pleasant.
 
