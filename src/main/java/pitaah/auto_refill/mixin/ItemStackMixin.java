@@ -20,6 +20,9 @@ public abstract class ItemStackMixin {
 		if(!AutoRefillModSettingsRegister.modSettings.autoRefillDoAnyRefillOnItems().value)
 			return;
 
+		if(entityplayer == null) // Some rare special cases were player can be null, like using activators.
+			return;
+
 		AutoRefill.CheckRefill(entityplayer, entityplayer.world, true);
 	}
 

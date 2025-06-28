@@ -99,6 +99,9 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint, ModelEnt
 		if(!AutoRefillModSettingsRegister.modSettings.autoRefillDoRefillOnDrop().value)
 			return;
 
+		if(player == null) // Some rare special cases were player can be null, like using activators.
+			return;
+
 		ItemStack currentStack = player.getHeldItem();
 
 		if(currentStack == null)
@@ -113,7 +116,8 @@ public class AutoRefill implements ModInitializer, GameStartEntrypoint, ModelEnt
 		DoRefillCheck(currentStack, player, player.world, ignoreSizeCheck);
 	}
 
-	public static void CheckRefill(Player entityLiving, World world, boolean ignoreSizeCheck) {
+	public static void CheckRefill(Player entityLiving, World world, boolean ignoreSizeCheck)
+	{
 		ItemStack currentStack = entityLiving.getHeldItem();
 
 		if (currentStack == null)
