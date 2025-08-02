@@ -1,0 +1,46 @@
+name: Update Modrinth Downloads Badge
+
+on:
+  schedule:
+    - cron: '30 5,17 * * *'  # runs once per day at midnight UTC
+  workflow_dispatch:     # allows manual run
+jobs:
+  update-badge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Fetch Modrinth downloads and create badge
+        run: |
+          MODRINTH_SLUG="auto-refill"  # CHANGE THIS
+          PROJECT_API="https://api.modrinth.com/v2/project/$MODRINTH_SLUG"
+          DOWNLOADS=$(curl -s "$PROJECT_API" | jq '.downloads')
+
+          # Format download count (e.g., 15342 -> 15.3k)
+          if [ "$DOWNLOADS" -ge 1000000 ]; then
+            DISPLAY="$(awk "BEGIN {printf \"%.1fM\", $DOWNLOADS/1000000}")"
+          elif [ "$DOWNLOADS" -ge 1000 ]; then
+            DISPLAY="$(awk "BEGIN {printf \"%.1fk\", $DOWNLOADS/1000}")"
+          else
+            DISPLAY="$DOWNLOADS"
+          fi
+
+          mkdir -p badges
+
+          cat <<EOF > badges/modrinth_downloads.json
+          {
+            "schemaVersion": 1,
+            "label": "Modrinth",
+            "message": "$DISPLAY downloads",
+            "color": "brightgreen"
+          }
+          EOF
+
+      - name: Commit badge
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add badges/modrinth_downloads.json
+          git commit -m "Update Modrinth download badge" || echo "No changes"
+          git push
