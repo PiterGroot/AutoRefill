@@ -1,5 +1,6 @@
 ![icon](https://github.com/PiterGroot/AutoRefill/assets/70685433/3da2cf6d-eb32-49d6-831d-4223c1453601)<br><br>
-![Modrinth](https://img.shields.io/badge/Modrinth-gray?logo=modrinth&logoColor=white) ![Modrinth Downloads](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/PiterGroot/AutoRefill/7.1/badges/modrinth_downloads.json)
+![Modrinth](https://img.shields.io/badge/Modrinth-gray?logo=modrinth&logoColor=white) [![Modrinth Downloads](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/PiterGroot/AutoRefill/7.1/badges/modrinth_downloads.json)](https://modrinth.com/mod/auto-refill)
+
 
 # AutoRefill - BTA 7.3_01
 <br>_Requires HalbLibe => 5.1.2_
