@@ -1,4 +1,6 @@
 ![icon](https://github.com/PiterGroot/AutoRefill/assets/70685433/3da2cf6d-eb32-49d6-831d-4223c1453601)
+![Modrinth Downloads](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/badges/modrinth_downloads.json)
+
 # AutoRefill - BTA 7.3_01
 <br>_Requires HalbLibe => 5.1.2_
 
