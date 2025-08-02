@@ -1,4 +1,3 @@
-![Modrinth Downloads](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/PiterGroot/AutoRefill/7.1/badges/modrinth_downloads.json) <br><br>
 ![icon](https://github.com/PiterGroot/AutoRefill/assets/70685433/3da2cf6d-eb32-49d6-831d-4223c1453601)
 
 # AutoRefill - BTA 7.3_01
