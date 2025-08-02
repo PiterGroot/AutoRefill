@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '30 5,17 * * *'  # runs once per day at midnight UTC
   workflow_dispatch:     # allows manual run
+permissions:
+    contents: write
 jobs:
   update-badge:
     runs-on: ubuntu-latest
