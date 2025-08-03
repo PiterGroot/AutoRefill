@@ -33,7 +33,7 @@ jobs:
           cat <<EOF > badges/modrinth_downloads.json
           {
             "schemaVersion": 1,
-            "label": "Modrinth",
+            "label": "",
             "message": "$DISPLAY downloads",
             "color": "brightgreen"
           }
